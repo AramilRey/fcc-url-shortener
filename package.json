@@ -1,0 +1,36 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "description": "freeCodeCamp URL Shortener API",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AramilRey/fcc-url-shortener.git"
+  },
+  "engines": {
+    "node": "8.x"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AramilRey/fcc-url-shortener/issues"
+  },
+  "homepage": "https://github.com/AramilRey/fcc-url-shortener#readme",
+  "dependencies": {
+    "boom": "^5.2.0",
+    "dotenv": "^4.0.0",
+    "koa": "^2.3.0",
+    "koa-body": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "koa-views": "^6.0.2",
+    "memoizee": "^0.4.5",
+    "mongoose": "^4.11.5",
+    "normalize-url": "^1.9.1",
+    "shortid": "^2.2.8",
+    "validator": "^8.0.0"
+  }
+}
