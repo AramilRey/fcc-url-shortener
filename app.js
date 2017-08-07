@@ -28,7 +28,10 @@ app.use(async (ctx, next) => {
 app.use(koaBody());
 app.use(views(path.join(__dirname, '/views'), { extension: 'html' }));
 
+// Go home
 router.get('/', async ctx => await ctx.render('home'));
+
+// Go to :shortUrl expanded or fail
 router.get('/:shortUrl', async ctx => {
   try {
     const redirectUrl = await Url.expand(ctx.params.shortUrl);
@@ -38,6 +41,8 @@ router.get('/:shortUrl', async ctx => {
     ctx.throw(422, error);
   }
 });
+
+// Shrink POSTed url or fail
 router.post('/', async ctx => {
   try {
     ctx.body = {

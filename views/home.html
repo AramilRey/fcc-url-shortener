@@ -1,4 +1,5 @@
-<html lang="en"><head>
+<html lang="en">
+    <head>
         <title>URL Shortener Microservice</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     </head>
@@ -12,17 +13,79 @@
                 <ul>1) I can pass a URL as a parameter and I will receive a shortened URL in the JSON response.</ul>
                 <ul>2) When I visit that shortened URL, it will redirect me to my original link.</ul>
             </blockquote>
-
-            <h3>Example usage:</h3>
-            <code>https://ftm.glitch.me/December%2015,%202015</code><br>
-            <code>https://ftm.glitch.me/1450137600</code>
-            <h3>Example output:</h3>
-            <code>
-                {
-                  "unix": 1450137600,
-                  "natural": "December 15, 2015"
-                }
-            </code>
+            <h3>Sample usage</h4>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h4>Input:</h4>
+                    <code>[POST] https://ur.glitch.me</code>
+                </div>
+                <div class="table-responsive col-xs-12 col-sm-6">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Value</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>url</td>
+                                <td><input type="text" class="form-control" id="url" value="www.google.com"></td>
+                                <td><button type="button" id="caller-button" class="btn btn-primary">Try it!</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h4>Output:</h4>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <pre><code id="json"></code></pre>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h4>Input:</h4>
+                    <code>[GET] https://ur.glitch.me/<span id="short-url-display"></span></code>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <h4>Output:</h4>
+                </div>
+                <div class="col-xs-12 col-sm-6">
+                    <a href="" target="_blank" id="short-url-link">Try it</a>
+                </div>
+            </div>
         </div>
-    
-</body></html>
+    <script type="text/javascript">
+        const xhr = new XMLHttpRequest();     
+        xhr.onreadystatechange = () => {
+            let state = 'processing...';
+            if (xhr.readyState == 4) {
+                let response = JSON.parse(xhr.responseText)
+
+                state = JSON.stringify(response, null, 4);
+                document.getElementById("short-url-display").innerHTML = response.shortUrl;
+                document.getElementById("short-url-link").setAttribute('href', response.shortUrl);
+            }
+            document.getElementById("json").innerHTML = state;            
+        }
+
+        const getShortUrl = () => {
+            const url = document.getElementById("url").value;
+
+            xhr.open("POST", "/");
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");   
+            xhr.send(`url=${url}`);
+        }
+
+        const callerButton = document.getElementById("caller-button")
+        callerButton.addEventListener("click", getShortUrl);
+        getShortUrl();
+    </script>
+    </body>
+</html>
